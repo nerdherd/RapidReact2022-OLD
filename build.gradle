@@ -68,7 +68,11 @@ dependencies {
     simulationRelease wpi.sim.enableRelease()
 
     testImplementation 'junit:junit:4.12'
+<<<<<<< Updated upstream
     implementation project(':NerdyLib')
+=======
+    compile project(':NerdyLib')
+>>>>>>> Stashed changes
 }
 
 // Simulation configuration (e.g. environment variables).
