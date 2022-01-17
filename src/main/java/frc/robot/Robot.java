@@ -4,11 +4,16 @@
 
 package frc.robot;
 
+import com.nerdherd.lib.drivetrain.teleop.TankDrive;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import frc.robot.constants.DriveConstants;
+
+import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Jevois;
 import frc.robot.subsystems.Limelight;
 
@@ -25,7 +30,7 @@ public class Robot extends TimedRobot {
 
   public static final String kDate = "2021_1_15_";
   
-
+  public static Drive drive;
   public static Jevois jevois;
   public static Limelight limelight;
   public static DriverStation ds;
@@ -36,6 +41,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    drive = new Drive();
+
+    drive.setDefaultCommand(new TankDrive(Robot.drive, Robot.oi));
+    drive.configKinematics(DriveConstants.kTrackWidth, new Rotation2d(0), new Pose2d(0, 0, new Rotation2d(0)));
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
@@ -54,12 +63,16 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
+    drive.reportToSmartDashboard();
+    
     CommandScheduler.getInstance().run();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    drive.setCoastMode();
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -85,6 +98,8 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    drive.setCoastMode();
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -103,4 +118,11 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {}
+
+  public static void runResetCommand() {
+    drive.resetEncoders();
+    drive.resetYaw();
+    drive.resetXY();
+  }
+
 }
