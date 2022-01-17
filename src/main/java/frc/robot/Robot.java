@@ -5,20 +5,27 @@
 package frc.robot;
 
 import com.nerdherd.lib.drivetrain.teleop.TankDrive;
+import com.nerdherd.lib.motor.commands.ResetSingleMotorEncoder;
+import com.nerdherd.lib.motor.single.SingleMotorVictorSPX;
+import com.nerdherd.lib.pneumatics.Piston;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.constants.DriveConstants;
-import frc.robot.OI;
 
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Jevois;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -31,11 +38,19 @@ public class Robot extends TimedRobot {
 
   public static final String kDate = "2021_1_15_";
   
+  public static SingleMotorVictorSPX intakeRoll;
+  public static ResetSingleMotorEncoder hoodReset;
+
   public static OI oi;
   public static Drive drive;
   public static Jevois jevois;
   public static Limelight limelight;
   public static DriverStation ds;
+  public static Indexer indexer;
+  public static Hopper hopper;
+  public static Hood hood;
+  public static Piston intake;
+  public static Shooter shooter;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -44,6 +59,14 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     drive = new Drive();
+    indexer = new Indexer();
+    hopper = new Hopper();
+    hood = new Hood();
+    shooter = new Shooter();
+
+    intakeRoll = new SingleMotorVictorSPX(RobotMap.kIntakeRoll, "Intake Rollers", false);
+    intake = new Piston(RobotMap.kIntakePort1, RobotMap.kIntakePort2);
+    hoodReset = new ResetSingleMotorEncoder(Robot.hood);
 
     drive.setDefaultCommand(new TankDrive(Robot.drive, Robot.oi));
     drive.configKinematics(DriveConstants.kTrackWidth, new Rotation2d(0), new Pose2d(0, 0, new Rotation2d(0)));
@@ -65,6 +88,11 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     drive.reportToSmartDashboard();
+    shooter.reportToSmartDashboard();
+    hopper.reportToSmartDashboard();
+    indexer.reportToSmartDashboard();
+    limelight.reportToSmartDashboard();
+    hood.reportToSmartDashboard();
     
     CommandScheduler.getInstance().run();
   }
@@ -72,6 +100,7 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
+    hood.resetEncoder();
     drive.setCoastMode();
   }
 
@@ -81,20 +110,18 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-<<<<<<< HEAD
-    
-=======
-
+    drive.setBrakeMode();
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
->>>>>>> 7ffc7ffd22dc059b70e842da0bd68afb8a981407
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    CommandScheduler.getInstance().run();
+  }
 
   @Override
   public void teleopInit() {
@@ -111,7 +138,10 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    CommandScheduler.getInstance().run();
+    oi.configJoystickDeadband(SmartDashboard.getNumber("deadband", oi.getJoystickDeadband()));
+  }
 
   @Override
   public void testInit() {

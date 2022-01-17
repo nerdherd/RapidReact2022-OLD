@@ -13,7 +13,7 @@ public class ShootBall extends CommandBase {
    */
   public ShootBall() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.index, Robot.hopper, Robot.hood);
+    addRequirements(Robot.indexer, Robot.hopper, Robot.hood);
   }
 
   // Called when the command is initially scheduled.
@@ -25,9 +25,6 @@ public class ShootBall extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Robot.index.setPower(0.75);
-    // Robot.hopper.setPower(0.4, 0.8);
-    // Robot.hood.setStoredAngle();
     if (Math.abs(Robot.shooter.getVelocity() - Robot.shooter.getDesiredVel())
           < ShooterConstants.kVelPercentTolerance * Robot.shooter.getDesiredVel()){
       isSafeToShoot++;
@@ -35,10 +32,10 @@ public class ShootBall extends CommandBase {
       isSafeToShoot = 0;
     }
     if (isSafeToShoot > 5) {
-      Robot.index.setPower(0.6);
+      Robot.indexer.setPower(0.6);
       Robot.hopper.setPower(0.4, 0.8);
     }else{
-      Robot.index.setPower(0.0);
+      Robot.indexer.setPower(0.0);
       Robot.hopper.setPower(0.0, 0.0);
     }
   }
@@ -46,7 +43,7 @@ public class ShootBall extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Robot.index.setPower(0);
+    Robot.indexer.setPower(0);
     Robot.hopper.setPower(0, 0);
   }
 
