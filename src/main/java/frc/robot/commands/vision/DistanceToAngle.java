@@ -10,7 +10,7 @@ package frc.robot.commands.vision;
 import com.nerdherd.lib.motor.commands.mechanisms.SetArmAngleMotionMagic;
 
 import frc.robot.Robot;
-// import frc.robot.constants.ShooterConstants;
+import frc.robot.constants.ShooterConstants;
 
 /**
  * Add your docs here.
