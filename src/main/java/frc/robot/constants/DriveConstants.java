@@ -22,18 +22,9 @@ public class DriveConstants {
     public static final double kDriveMaxVel = 2.0;
     public static final double kDriveMaxAccel = 1.0;
     
-    public static final double kGoalMetersY = -2.404;
-    public static final double kAutoLineMeters = 3.048;
-    public static final double kEnemyTrenchMetersX = 6.359;
-    public static final double kEnemyTrenchMetersY = -7.506;
-    
-    
-    public static final double kTrenchMetersX = 5.248;
-    public static final double kTrenchMetersY = -0.70485;
-    public static final double kTrenchThirdBallX = 7.991602;
-    public static final double kEndTrenchMetersX = 9.62406;
-    public static final double kEndTrenchMetersY = -0.6;
-    
+    public static final double kStartAngle = 1.055285;
+    public static final double kTarmacToBallOne = 1.257627;
+
     public static final double kLeftRamseteS = 0.7;
     public static final double kLeftRamseteV = 2.08;
     public static final double kLeftRamseteA = 0.45;
@@ -43,17 +34,11 @@ public class DriveConstants {
     public static final double kramseteV = 2.08;
     public static final double kramseteA = 0.429;
 
-    // public static final double kramseteP = 9.52;
-    // public static final double kramseteI = 0;
-    // public static final double kramseteD = 0;
-
     public static final double kRightRamseteS = 0.705;
     public static final double kRightRamseteV = 2.08;
     public static final double kRightRamseteA = 0.43;
 
 	public static final double kRamseteMaxVolts = 10;
-
-    
     
     public static double kLeftStatic = 0.39; 
     public static double kRightStatic =  0.194;
