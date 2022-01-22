@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.intake.ToggleStow;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
 import com.nerdherd.lib.oi.controllers.NerdyXboxController.Hand;
@@ -49,8 +50,6 @@ public class XboxOI extends XboxDriverOI {
             BUTTON_BACK = 7, BUTTON_START = 8, BUTTON_LEFT_STICK = 9, BUTTON_RIGHT_STICK = 10;
 
     private double m_triggerThreshold = 0.25;
-
-    private boolean toggleStow = false;
 
     public XboxOI() {
         this(0);
@@ -74,8 +73,9 @@ public class XboxOI extends XboxDriverOI {
             }
         };
 
-        intakeStow.whenPressed(new InstantCommand(() -> toggleStow = !toggleStow).alongWith());
-        
+        intakeStow.whenPressed(new ToggleStow());
+        // aim index
+        // climbReady.whenPressed(new )
     }
 
     public void update() {

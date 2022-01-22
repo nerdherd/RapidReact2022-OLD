@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.constants.DriveConstants;
-
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Jevois;
@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
   public static Hood hood;
   public static Piston intake;
   public static Shooter shooter;
+  public static Climber climber;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -65,6 +66,7 @@ public class Robot extends TimedRobot {
     hopper = new Hopper();
     hood = new Hood();
     shooter = new Shooter();
+    climber = new Climber();
     xbox_oi = new XboxOI();
 
     intakeRoll = new SingleMotorVictorSPX(RobotMap.kIntakeRoll, "Intake Rollers", false);
