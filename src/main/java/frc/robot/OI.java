@@ -3,7 +3,9 @@ package frc.robot;
 import com.nerdherd.lib.motor.commands.SetMotorPower;
 import com.nerdherd.lib.oi.DefaultOI;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.auto.BasicAuto;
 import frc.robot.commands.hood.SetAngle;
 import frc.robot.commands.intake.IntakeBalls;
 import frc.robot.commands.intake.Stow;
@@ -32,5 +34,7 @@ public class OI extends DefaultOI {
         startShooting_2.whileHeld(new ShootBall());
         hoodAngle_5.whenPressed(new SetAngle());
         stow_10.whenPressed(new Stow());
+
+        SmartDashboard.putData("BasicAuto", new BasicAuto());
     }
 }
