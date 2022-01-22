@@ -9,8 +9,10 @@ package frc.robot.subsystems;
 
 import com.nerdherd.lib.drivetrain.experimental.ShiftingDrivetrain;
 import com.nerdherd.lib.motor.motorcontrollers.CANMotorController;
-import com.nerdherd.lib.motor.motorcontrollers.NerdyFalcon;
+import com.nerdherd.lib.motor.motorcontrollers.NerdySparkMax;
+import com.nerdherd.lib.motor.motorcontrollers.SmartCANMotorController;
 import com.nerdherd.lib.pneumatics.Piston;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.hal.SimDevice;
 import edu.wpi.first.hal.SimDouble;
@@ -35,18 +37,14 @@ public class Drive extends ShiftingDrivetrain {
   private SimDevice m_gyroSim;
   private Field2d m_field;
 
+  private static SmartCANMotorController leftMaster = new NerdySparkMax(RobotMap.kLeftMasterTalonID, MotorType.kBrushed);
+  private static SmartCANMotorController rightMaster = new NerdySparkMax(RobotMap.kRightMasterTalonID, MotorType.kBrushed);
+  private static CANMotorController[] leftSlaves = new CANMotorController[] { new NerdySparkMax(RobotMap.kLeftFollowerTalon1ID, MotorType.kBrushed) };
+  private static CANMotorController[] rightSlaves = new CANMotorController[] { new NerdySparkMax(RobotMap.kRightFollowerTalon1ID, MotorType.kBrushed) };
+  private static Piston shifter = new Piston(RobotMap.  kShifterPort1ID, RobotMap.kShifterPort2ID);
 
   public Drive() {
-    super(new NerdyFalcon(RobotMap.kLeftMasterTalonID),
-        new NerdyFalcon(RobotMap.kRightMasterTalonID),
-        new CANMotorController[] {
-        new NerdyFalcon(RobotMap.kLeftFollowerTalon1ID),
-    },
-    new CANMotorController[] {
-      new NerdyFalcon(RobotMap.kRightFollowerTalon1ID),
-    },
-     true, false, new Piston(RobotMap.  kShifterPort1ID, RobotMap.kShifterPort2ID),
-      DriveConstants.kTrackWidth);
+      super(leftMaster, rightMaster, leftSlaves, rightSlaves, true, false, shifter, DriveConstants.kTrackWidth);
       
      super.configMaxVelocity(DriveConstants.kMaxVelocity);
      super.configSensorPhase(false, true);
@@ -60,13 +58,17 @@ public class Drive extends ShiftingDrivetrain {
      super.m_leftMaster.configCurrentLimitPeak(50);
      super.m_rightMaster.configCurrentLimitPeak(50);
 
-     super.m_leftSlaves[0].configCurrentLimitContinuous(50);
-     super.m_rightSlaves[0].configCurrentLimitContinuous(50);
-     super.m_leftSlaves[0].configCurrentLimitPeak(50);
-     super.m_rightSlaves[0].configCurrentLimitPeak(50);
-     setCoastMode();
+     for (CANMotorController follower : super.m_leftSlaves) {
+       follower.configCurrentLimitContinuous(50);
+     }
 
+     for (CANMotorController follower : super.m_leftSlaves) {
+      follower.configCurrentLimitPeak(50);
+      }
+
+     setCoastMode();
      resetEncoders();
+     
      m_field = new Field2d();
      SmartDashboard.putData("Field", m_field);
 
