@@ -31,11 +31,11 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 
-public class TarmacToTerminalThree extends SequentialCommandGroup {
+public class TarmacToTerminalFive extends SequentialCommandGroup {
     
     private Drivetrain m_drive;
 
-    public TarmacToTerminalThree(Drivetrain drive) {
+    public TarmacToTerminalFive(Drivetrain drive) {
         var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
         new SimpleMotorFeedforward(DriveConstants.kramseteS, DriveConstants.kramseteV, DriveConstants.kramseteA),
         m_drive.m_kinematics, 
@@ -47,8 +47,10 @@ public class TarmacToTerminalThree extends SequentialCommandGroup {
         config.addConstraints(List.of(autoVoltageConstraint, autoCentripetalAccelerationConstraint));
 
         Trajectory tarmacToTerminal = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(new Translation2d(Math.cos(DriveConstants.kTarmacToBallOne) * 16.867, Math.sin(DriveConstants.kTarmacToBallOne) * 16.867)),
+            new Pose2d(0, 91.37500, new Rotation2d(0.25)),
+            List.of(new Translation2d(29.8244158, 150.06500),
+                    new Translation2d(Math.cos(DriveConstants.kTarmacToBallOne) * 16.867, Math.sin(DriveConstants.kTarmacToBallOne) * 16.867)
+            ),
             new Pose2d(275.24, 132.93, new Rotation2d(0.449923)),
             config);
 
@@ -63,6 +65,7 @@ public class TarmacToTerminalThree extends SequentialCommandGroup {
             m_drive::setVoltage, m_drive);
 
         addCommands(
+            new BasicAutoNoMove(),
             new ParallelRaceGroup(new IntakeBalls(), driveTarmacToTerminal),
             new WaitCommand(3)
         );
