@@ -8,11 +8,11 @@ package frc.robot;
  * Add your docs here.
  */
 public class RobotMap {
-    public static final int kRightMasterTalonID = 9;
-    public static final int kLeftMasterTalonID = 20;
+    public static final int kRightMasterID = 9;
+    public static final int kLeftMasterID = 20;
 
-    public static final int kLeftFollowerTalon1ID = 19;
-    public static final int kRightFollowerTalon1ID = 15;
+    public static final int kLeftFollower1ID = 19;
+    public static final int kRightFollower1ID = 15;
   
     public static final int kHoodID = 4;
 
@@ -45,5 +45,8 @@ public class RobotMap {
     public static final int kTimeOfFlightSensorID3 = 2;
 
     public static final int kPanelRollerID = 25;
+
+    public static final boolean kSensorPhase1 = false;
+    public static final boolean kSensorPhase2 = false;
     
 }

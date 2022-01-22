@@ -37,10 +37,10 @@ public class Drive extends ShiftingDrivetrain {
   private SimDevice m_gyroSim;
   private Field2d m_field;
 
-  private static SmartCANMotorController leftMaster = new NerdySparkMax(RobotMap.kLeftMasterTalonID, MotorType.kBrushed);
-  private static SmartCANMotorController rightMaster = new NerdySparkMax(RobotMap.kRightMasterTalonID, MotorType.kBrushed);
-  private static CANMotorController[] leftSlaves = new CANMotorController[] { new NerdySparkMax(RobotMap.kLeftFollowerTalon1ID, MotorType.kBrushed) };
-  private static CANMotorController[] rightSlaves = new CANMotorController[] { new NerdySparkMax(RobotMap.kRightFollowerTalon1ID, MotorType.kBrushed) };
+  private static SmartCANMotorController leftMaster = new NerdySparkMax(RobotMap.kLeftMasterID, MotorType.kBrushed);
+  private static SmartCANMotorController rightMaster = new NerdySparkMax(RobotMap.kRightMasterID, MotorType.kBrushed);
+  private static CANMotorController[] leftSlaves = new CANMotorController[] { new NerdySparkMax(RobotMap.kLeftFollower1ID, MotorType.kBrushed) };
+  private static CANMotorController[] rightSlaves = new CANMotorController[] { new NerdySparkMax(RobotMap.kRightFollower1ID, MotorType.kBrushed) };
   private static Piston shifter = new Piston(RobotMap.  kShifterPort1ID, RobotMap.kShifterPort2ID);
 
   public Drive() {
