@@ -8,8 +8,10 @@
 package frc.robot.subsystems;
 
 import com.nerdherd.lib.motor.dual.DualMotorIntake;
+import com.nerdherd.lib.motor.motorcontrollers.NerdySparkMax;
 import com.nerdherd.lib.motor.motorcontrollers.NerdyVictorSPX;
 import com.nerdherd.lib.motor.single.SingleMotorVictorSPX;
+
 
 import frc.robot.RobotMap;
 
@@ -18,14 +20,13 @@ import frc.robot.RobotMap;
  */
 public class Hopper extends DualMotorIntake {
 
-    public static NerdyVictorSPX topRoller;
-    static SingleMotorVictorSPX leftRoller = new SingleMotorVictorSPX(RobotMap.kFeederID1, "Top Intake", true);
+    public static SingleMotorVictorSPX leftRoller = new SingleMotorVictorSPX(RobotMap.kFeederID1, "Left Intake", true);
+    public static SingleMotorVictorSPX rightRoller = new SingleMotorVictorSPX(RobotMap.kFeederID2, "Right Intake", false);
+    public static NerdyVictorSPX topRoller = new NerdyVictorSPX(RobotMap.kTopHopperRollerID);
 
     public Hopper() {
-        super(leftRoller, 
-            new SingleMotorVictorSPX(RobotMap.kFeederID2, "Bottom Intake", false));
-        topRoller = new NerdyVictorSPX(RobotMap.kTopHopperRollerID);
-        topRoller.follow(leftRoller.motor);
+        super(leftRoller,rightRoller);
+        topRoller.follow(rightRoller.motor);
     }
 
     @Override
