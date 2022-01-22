@@ -7,6 +7,8 @@ package frc.robot;
 import com.nerdherd.lib.drivetrain.teleop.TankDrive;
 import com.nerdherd.lib.motor.commands.ResetSingleMotorEncoder;
 import com.nerdherd.lib.motor.single.SingleMotorVictorSPX;
+import com.nerdherd.lib.oi.AbstractOI;
+import com.nerdherd.lib.oi.controllers.NerdyXboxController.Hand;
 import com.nerdherd.lib.pneumatics.Piston;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -41,7 +43,7 @@ public class Robot extends TimedRobot {
   public static SingleMotorVictorSPX intakeRoll;
   public static ResetSingleMotorEncoder hoodReset;
 
-  public static OI oi;
+  public static XboxOI xbox_oi;
   public static Drive drive;
   public static Jevois jevois;
   public static Limelight limelight;
@@ -63,12 +65,13 @@ public class Robot extends TimedRobot {
     hopper = new Hopper();
     hood = new Hood();
     shooter = new Shooter();
+    xbox_oi = new XboxOI();
 
     intakeRoll = new SingleMotorVictorSPX(RobotMap.kIntakeRoll, "Intake Rollers", false);
     intake = new Piston(RobotMap.kIntakePort1, RobotMap.kIntakePort2);
     hoodReset = new ResetSingleMotorEncoder(Robot.hood);
 
-    drive.setDefaultCommand(new TankDrive(Robot.drive, Robot.oi));
+    drive.setDefaultCommand(new TankDrive(Robot.drive, Robot.xbox_oi));
     drive.configKinematics(DriveConstants.kTrackWidth, new Rotation2d(0), new Pose2d(0, 0, new Rotation2d(0)));
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
@@ -140,7 +143,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     CommandScheduler.getInstance().run();
-    oi.configJoystickDeadband(SmartDashboard.getNumber("deadband", oi.getJoystickDeadband()));
+    xbox_oi.update(); // update the oi
   }
 
   @Override
