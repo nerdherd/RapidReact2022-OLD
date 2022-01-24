@@ -11,6 +11,8 @@ import frc.robot.commands.hood.SetAngle;
 import frc.robot.commands.intake.IntakeBalls;
 import frc.robot.commands.intake.Stow;
 import frc.robot.commands.shooting.ShootBall;
+import frc.robot.commands.vision.MoveToAngleLime;
+import frc.robot.constants.VisionConstants;
 
 public class OI extends DefaultOI {
     public JoystickButton intake_1, startShooting_2, startShootingOld_3, trenchShot_7, autolineShot_9, stow_10,
@@ -36,6 +38,7 @@ public class OI extends DefaultOI {
         hoodAngle_5.whenPressed(new SetAngle());
         stow_10.whenPressed(new Stow());
 
+        SmartDashboard.putData("MoveToAngle", new MoveToAngleLime(VisionConstants.kRotP_lime, VisionConstants.kVecP_lime));
         SmartDashboard.putData("Basic Auto", new BasicAuto());
         SmartDashboard.putData("Tarmac to Terminal Five", new TarmacToTerminalThree(Robot.drive));
     }
