@@ -46,4 +46,9 @@ public class VisionConstants {
     public final static double kDriveRotationDeadband = 0.5;
     public final static double kDetectDistance = 25;
 
+
+    public final static double kVecP_lime = 0.004;
+    public final static double kShortShot = 0;
+    public final static double kLongShot = 0;
+
 }
