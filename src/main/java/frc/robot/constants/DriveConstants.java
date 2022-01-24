@@ -23,7 +23,7 @@ public class DriveConstants {
     public static final double kDriveMaxAccel = 1.0;
     
     public static final double kStartAngle = 1.055285;
-    public static final double kTarmacToBallOne = 1.257627;
+    public static final double kTarmacToBallOneAngle = 1.257627;
 
     public static final double kLeftRamseteS = 0.7;
     public static final double kLeftRamseteV = 2.08;

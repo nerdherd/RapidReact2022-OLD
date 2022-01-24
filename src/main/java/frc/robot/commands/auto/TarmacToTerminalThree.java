@@ -48,8 +48,8 @@ public class TarmacToTerminalThree extends SequentialCommandGroup {
 
         Trajectory tarmacToTerminal = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(new Translation2d(Math.cos(DriveConstants.kTarmacToBallOne) * 16.867, Math.sin(DriveConstants.kTarmacToBallOne) * 16.867)),
-            new Pose2d(275.24, 132.93, new Rotation2d(0.449923)),
+            List.of(new Translation2d(Math.cos(DriveConstants.kTarmacToBallOneAngle) * 16.867, Math.sin(DriveConstants.kTarmacToBallOneAngle) * 16.867)),
+            new Pose2d(6.991096, 3.376422, new Rotation2d(0.449923)),
             config);
 
         RamseteCommand driveTarmacToTerminal = new RamseteCommand(tarmacToTerminal,
