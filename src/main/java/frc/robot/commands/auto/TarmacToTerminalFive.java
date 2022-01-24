@@ -14,12 +14,15 @@ import java.lang.Math;
 
 import com.nerdherd.lib.drivetrain.experimental.Drivetrain;
 
+import frc.robot.Robot;
+import frc.robot.commands.vision.MoveToAngleLime;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.CentripetalAccelerationConstraint;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -27,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.intake.IntakeBalls;
 import frc.robot.commands.shooting.ShootBall;
 import frc.robot.constants.DriveConstants;
+import frc.robot.constants.VisionConstants;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -86,10 +90,12 @@ public class TarmacToTerminalFive extends SequentialCommandGroup {
         addCommands(
             new BasicAutoNoMove(),
             new ParallelRaceGroup(new IntakeBalls(), driveTarmacToMidBall),
-            // turn towards hub
+            new MoveToAngleLime(VisionConstants.kRotP_lime, VisionConstants.kVecP_lime),
+            new ParallelCommandGroup(new InstantCommand(() -> Robot.hood.setAngle(45))),
             new ParallelRaceGroup(new ShootBall(), new WaitCommand(5)),
             new ParallelRaceGroup(new IntakeBalls(), driveMidBallToTerminal),
-            // turn towards hub
+            new MoveToAngleLime(VisionConstants.kRotP_lime, VisionConstants.kVecP_lime),
+            new ParallelCommandGroup(new InstantCommand(() -> Robot.hood.setAngle(45))),
             new ParallelRaceGroup(new ShootBall(), new WaitCommand(5))
         );
 

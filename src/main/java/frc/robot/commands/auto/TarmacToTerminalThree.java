@@ -13,16 +13,20 @@ import java.lang.Math;
 
 import com.nerdherd.lib.drivetrain.experimental.Drivetrain;
 
+import frc.robot.Robot;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.CentripetalAccelerationConstraint;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.intake.IntakeBalls;
+import frc.robot.commands.shooting.ShootBall;
 import frc.robot.constants.DriveConstants;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
@@ -64,6 +68,8 @@ public class TarmacToTerminalThree extends SequentialCommandGroup {
 
         addCommands(
             new ParallelRaceGroup(new IntakeBalls(), driveTarmacToTerminal),
+            new ParallelCommandGroup(new InstantCommand(() -> Robot.hood.setAngle(45))),
+            new ParallelRaceGroup(new ShootBall(), new WaitCommand(5)),
             new WaitCommand(3)
         );
 
