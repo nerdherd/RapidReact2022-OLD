@@ -193,7 +193,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    SmartDashboard.putNumber("LMVolt", getLeftMasterVel());
   }
 
   public static void runResetCommand() {
@@ -203,6 +202,38 @@ public class Robot extends TimedRobot {
   }
 
   public void reportToSmartDashboard() {
+    SmartDashboard.putNumber("LMVoltage", getLeftMasterVoltage());
+    SmartDashboard.putNumber("LMCurrent", getLeftMasterCurrent());
+    SmartDashboard.putNumber("LMVelocity", getLeftMasterVel());
+    SmartDashboard.putNumber("LMPosition", getLeftMasterPos());
+    SmartDashboard.putNumber("RMVoltage", getRightMasterVoltage());
+    SmartDashboard.putNumber("RMCurrent", getRightMasterCurrent());
+    SmartDashboard.putNumber("RMVelocity", getRightMasterVel());
+    SmartDashboard.putNumber("RMPosition", getRightMasterPos());
+    SmartDashboard.putNumber("LFVoltage", getLeftFollowerVoltage());
+    SmartDashboard.putNumber("LFCurrent", getLeftFollowerCurrent());
+    SmartDashboard.putNumber("LFVelocity", getLeftFollowerVel());
+    SmartDashboard.putNumber("LFPosition", getLeftFollowerPos());
+    SmartDashboard.putNumber("RFVoltage", getRightFollowerVoltage());
+    SmartDashboard.putNumber("RFCurrent", getRightFollowerCurrent());
+    SmartDashboard.putNumber("RFVelocity", getRightFollowerVel());
+    SmartDashboard.putNumber("RFPosition", getRightFollowerPos());
+    SmartDashboard.putNumber("EVoltage", getElevatorVoltage());
+    SmartDashboard.putNumber("ECurrent", getElevatorCurrent());
+    SmartDashboard.putNumber("EVelocity", getElevatorVel());
+    SmartDashboard.putNumber("EPosition", getElevatorPos());
+    SmartDashboard.putNumber("AVoltage", getArmVoltage());
+    SmartDashboard.putNumber("ACurrent", getArmCurrent());
+    SmartDashboard.putNumber("AVelocity", getArmVel());
+    SmartDashboard.putNumber("APosition", getArmPos());
+    SmartDashboard.putNumber("CRoll", getCurrentRoll());
+    SmartDashboard.putNumber("CPitch", getCurrentPitch());
+    SmartDashboard.putNumber("CYaw", getCurrentYaw());
+    SmartDashboard.putNumber("NavTS", getNavTimestamp());
+    SmartDashboard.putNumber("CAccelX", getCurrentAccelX());
+    SmartDashboard.putNumber("CAccelY", getCurrentAccelY());
+    SmartDashboard.putNumber("CAccelZ", getCurrentAccelZ ());
+
 
   }
 
