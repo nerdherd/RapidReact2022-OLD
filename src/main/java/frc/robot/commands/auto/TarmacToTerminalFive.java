@@ -10,8 +10,8 @@ package frc.robot.commands.auto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.Math;
 
+import com.nerdherd.lib.drivetrain.characterization.OpenLoopDrive;
 import com.nerdherd.lib.drivetrain.experimental.Drivetrain;
 
 import frc.robot.Robot;
@@ -53,21 +53,35 @@ public class TarmacToTerminalFive extends SequentialCommandGroup {
         TrajectoryConfig config = new TrajectoryConfig(DriveConstants.kDriveMaxVel, DriveConstants.kDriveMaxAccel);
         config.addConstraints(List.of(autoVoltageConstraint, autoCentripetalAccelerationConstraint));
 
-        Trajectory tarmacToMidBall = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 2.320925, new Rotation2d(0.25)),
-            List.of(new Translation2d(0.757540, 3.811651),
-                    new Translation2d(Math.cos(DriveConstants.kTarmacToBallOneAngle) * 0.428422, Math.sin(DriveConstants.kTarmacToBallOneAngle) * 0.428422)
-            ),
-            new Pose2d(Math.cos(DriveConstants.kTarmacToBallOneAngle) * 0.428422, Math.sin(DriveConstants.kTarmacToBallOneAngle) * 0.428422, new Rotation2d(1.92)),
+        Trajectory tarmacToLeftBall = TrajectoryGenerator.generateTrajectory( // Backs up after intaking left ball 
+            new Pose2d(0.616995, 2.320925, new Rotation2d(0)),
+            List.of(new Translation2d(0.757540, 3.811651 - DriveConstants.kWallOffset)),
+            new Pose2d(0.616995, 1.02235, new Rotation2d(0)),
             config);
 
+        Trajectory leftBallToMidBall = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(0.616995, 1.02235, new Rotation2d(0)),
+            new ArrayList<Translation2d>(),
+            new Pose2d(6.72583252494, 3.22479779474, new Rotation2d(0.763581548)),
+            config);
+            
         Trajectory midBallToTerminal = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(Math.cos(DriveConstants.kTarmacToBallOneAngle) * 0.428422, Math.sin(DriveConstants.kTarmacToBallOneAngle) * 0.428422, new Rotation2d(1.92)),
-            new ArrayList<Translation2d>(), // No waypoints
-            new Pose2d(6.991096, 3.376422, new Rotation2d(0.449923)),
+            new Pose2d(3.1736324132, 2.24290163814, new Rotation2d(0.615228561)),
+            new ArrayList<Translation2d>(),
+            new Pose2d(6.72583252494, 3.22479779474, new Rotation2d(0.763581548)),
             config);
+            
+        RamseteCommand driveTarmacToLeftBall = new RamseteCommand(tarmacToLeftBall,
+            m_drive::getPose2d,
+            new RamseteController(1.05, 0.14),
+            new SimpleMotorFeedforward(DriveConstants.kramseteS, DriveConstants.kramseteV, DriveConstants.kramseteA),
+            m_drive.m_kinematics,
+            m_drive::getCurrentSpeeds,
+            new PIDController(DriveConstants.kLeftP, DriveConstants.kLeftI, DriveConstants.kLeftD),
+            new PIDController(DriveConstants.kRightP, DriveConstants.kRightI, DriveConstants.kRightD),
+            m_drive::setVoltage, m_drive);
 
-        RamseteCommand driveTarmacToMidBall = new RamseteCommand(tarmacToMidBall,
+        RamseteCommand driveLeftBallToMidBall = new RamseteCommand(leftBallToMidBall,
             m_drive::getPose2d,
             new RamseteController(1.05, 0.14),
             new SimpleMotorFeedforward(DriveConstants.kramseteS, DriveConstants.kramseteV, DriveConstants.kramseteA),
@@ -88,12 +102,26 @@ public class TarmacToTerminalFive extends SequentialCommandGroup {
             m_drive::setVoltage, m_drive);
 
         addCommands(
-            new BasicAutoNoMove(),
-            new ParallelRaceGroup(new IntakeBalls(), driveTarmacToMidBall),
+            // Without shooting/intake
+            // driveTarmacToMidBall,
+            // new WaitCommand(3),
+            // driveMidBallToTerminal
+
+            // With shooting/intake
+            new BasicAutoNoMove(), // Robot must face away from basket
+            new ParallelRaceGroup(new IntakeBalls(), driveTarmacToLeftBall),
             new MoveToAngleLime(VisionConstants.kRotP_lime, VisionConstants.kVecP_lime),
             new ParallelCommandGroup(new InstantCommand(() -> Robot.hood.setAngle(45))),
             new ParallelRaceGroup(new ShootBall(), new WaitCommand(5)),
+
+            new ParallelRaceGroup(new IntakeBalls(), driveLeftBallToMidBall),
+            new ParallelRaceGroup(new OpenLoopDrive(Robot.drive, -0.2), new WaitCommand(1)),
+            new MoveToAngleLime(VisionConstants.kRotP_lime, VisionConstants.kVecP_lime),
+            new ParallelCommandGroup(new InstantCommand(() -> Robot.hood.setAngle(45))),
+            new ParallelRaceGroup(new ShootBall(), new WaitCommand(5)),
+
             new ParallelRaceGroup(new IntakeBalls(), driveMidBallToTerminal),
+            new ParallelRaceGroup(new OpenLoopDrive(Robot.drive, -0.2), new WaitCommand(1)),
             new MoveToAngleLime(VisionConstants.kRotP_lime, VisionConstants.kVecP_lime),
             new ParallelCommandGroup(new InstantCommand(() -> Robot.hood.setAngle(45))),
             new ParallelRaceGroup(new ShootBall(), new WaitCommand(5))

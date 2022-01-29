@@ -29,6 +29,8 @@ public class DriveConstants {
     public static final double kLeftRamseteV = 2.08;
     public static final double kLeftRamseteA = 0.45;
 
+    public static final double kWallOffset = 0.3048;
+
 
     public static final double kramseteS = 0.731; //replace these when analyzing middle? 
     public static final double kramseteV = 2.08;
