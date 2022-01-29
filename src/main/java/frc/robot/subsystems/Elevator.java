@@ -17,16 +17,13 @@ import frc.robot.constants.ClimberConstants;
 /**
  * Add your docs here.
  */
-public class Climber extends SingleMotorElevator {
-  public static NerdyFalcon followerFalcon = new NerdyFalcon(RobotMap.kClimberID2);
+public class Elevator extends SingleMotorElevator {
   public static NerdyFalcon mainFalcon = new NerdyFalcon(RobotMap.kClimberID1);
 
-public Climber(){
-  super(mainFalcon.getID(), "Climber ", false, false);
-  followerFalcon.follow(mainFalcon);
+public Elevator(){
+  super(mainFalcon.getID(), "Climber ", true, false);
   // mainFalcon.setBrakeMode();
   // followerFalcon.setBrakeMode();
-  followerFalcon.setInverted(TalonFXInvertType.OpposeMaster);
   super.configDeadband(ClimberConstants.kClimberTalonDeadband);
   super.configHeightConversion(ClimberConstants.kClimberDistanceRatio,
     ClimberConstants.kClimberHeightOffset);

@@ -19,4 +19,21 @@ public class ClimberConstants {
     public static final double kClimberDesiredHoldPow = -0.1;
     public static final double kHardStopPos = 740000;
     public static final double kClimbGoodPos = 200000;
+
+    public static final double kArmAngleRatio = 0;
+    public static final double kArmAngleOffset = 0;
+    public static final double kArmVel = 0;
+    public static final double kArmAccel = 0;
+    public static final double kArmP = 0;
+    public static final double kArmF = 0;
+    public static final double kArmGravityFF = 0;
+    public static final double kArmStaticFriction = 0;
+    public static final double kArmS = 0;
+    public static final double kArmCos = 0;
+    public static final double kArmV = 0;
+    public static final double kArmA = 0;
+    public static final int kMotionMagicAcceleration = 0;
+    public static final int kMotionMagicVelocity = 0;
+
+    public static final double kRungAngle = 0.568977336;
 }
