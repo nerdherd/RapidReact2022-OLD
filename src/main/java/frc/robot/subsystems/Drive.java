@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.nerdherd.lib.drivetrain.experimental.ShiftingDrivetrain;
 import com.nerdherd.lib.motor.motorcontrollers.CANMotorController;
+import com.nerdherd.lib.motor.motorcontrollers.NerdyFalcon;
 import com.nerdherd.lib.motor.motorcontrollers.NerdySparkMax;
 import com.nerdherd.lib.motor.motorcontrollers.SmartCANMotorController;
 import com.nerdherd.lib.pneumatics.Piston;
@@ -37,11 +38,20 @@ public class Drive extends ShiftingDrivetrain {
   private SimDevice m_gyroSim;
   private Field2d m_field;
 
-  private static SmartCANMotorController leftMaster = new NerdySparkMax(RobotMap.kLeftMasterID, MotorType.kBrushed);
-  private static SmartCANMotorController rightMaster = new NerdySparkMax(RobotMap.kRightMasterID, MotorType.kBrushed);
-  private static CANMotorController[] leftSlaves = new CANMotorController[] { new NerdySparkMax(RobotMap.kLeftFollower1ID, MotorType.kBrushed) };
-  private static CANMotorController[] rightSlaves = new CANMotorController[] { new NerdySparkMax(RobotMap.kRightFollower1ID, MotorType.kBrushed) };
+
+  // Drive for Thomas
+  private static NerdyFalcon leftMaster = new NerdyFalcon(RobotMap.kLeftMasterID);
+  private static NerdyFalcon rightMaster = new NerdyFalcon(RobotMap.kRightMasterID);
+  private static CANMotorController[] leftSlaves = new CANMotorController[] { new NerdyFalcon(RobotMap.kLeftFollower1ID)};
+  private static CANMotorController[] rightSlaves = new CANMotorController[] { new NerdyFalcon(RobotMap.kRightFollower1ID)};
   private static Piston shifter = new Piston(RobotMap.  kShifterPort1ID, RobotMap.kShifterPort2ID);
+
+  // Drive for 2022 Bot
+  // private static SmartCANMotorController leftMaster = new NerdySparkMax(RobotMap.kLeftMasterID, MotorType.kBrushed);
+  // private static SmartCANMotorController rightMaster = new NerdySparkMax(RobotMap.kRightMasterID, MotorType.kBrushed);
+  // private static CANMotorController[] leftSlaves = new CANMotorController[] { new NerdySparkMax(RobotMap.kLeftFollower1ID, MotorType.kBrushed) };
+  // private static CANMotorController[] rightSlaves = new CANMotorController[] { new NerdySparkMax(RobotMap.kRightFollower1ID, MotorType.kBrushed) };
+  // private static Piston shifter = new Piston(RobotMap.  kShifterPort1ID, RobotMap.kShifterPort2ID);
 
   public Drive() {
      super(leftMaster, rightMaster, leftSlaves, rightSlaves, true, false, shifter, DriveConstants.kTrackWidth);
