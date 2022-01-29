@@ -29,6 +29,14 @@ import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import edu.wpi.first.wpilibj.Timer;
+
+
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -41,6 +49,12 @@ public class Robot extends TimedRobot {
   public static final String kDate = "2021_1_15_";
   
   public static SingleMotorVictorSPX intakeRoll;
+  private String m_filePath1 = "/media/sda1/logs/";
+  private String m_filePath2 = "/home/lvuser/logs/";
+  private File m_file;
+  public FileWriter m_writer;
+  private boolean writeException = false;
+  private double m_logStartTime = 0;
   public static ResetSingleMotorEncoder hoodReset;
 
   public static XboxOI xbox_oi;
@@ -164,4 +178,66 @@ public class Robot extends TimedRobot {
     drive.resetXY();
   }
 
+  public void startLog(){
+    File logFolder1 = new File(m_filePath1);
+	  File logFolder2 = new File(m_filePath2);
+    Path filePrefix = Paths.get("");
+    if (logFolder1.exists() && logFolder1.isDirectory()) {
+      filePrefix = Paths.get(logFolder1.toString(), 
+      Robot.kDate + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Drive");
+    } else if (logFolder2.exists() && logFolder2.isDirectory()) {
+      filePrefix = Paths.get(logFolder2.toString(), 
+      Robot.kDate + Robot.ds.getMatchType().toString() + Robot.ds.getMatchNumber() + "Drive");
+    } else {
+      writeException = true;
+    }
+
+    if (!writeException) {
+      int counter = 0;
+      while (counter <= 99) {
+        m_file = new File(filePrefix.toString() + String.format("%02d", counter) + ".csv");
+        if (m_file.exists()) {
+          counter++;
+        } else {
+          break;
+        }
+        if (counter == 99) {
+          System.out.println("Log creation counter at 99.");
+        }
+      }
+      try {
+        m_writer = new FileWriter(m_file);
+        m_writer.append(csq);
+        m_logStartTime = Timer.getFPGATimestamp();
+      } catch (IOException e) {
+        e.printStackTrace();
+		    writeException = true;
+      }
+    }
+  }
+
+  public void stopLog() {
+    try {
+	    if (null != m_writer) {
+		    m_writer.close();
+      }
+	  } catch (IOException e) {
+	      e.printStackTrace();
+	      writeException = true;
+	  }
+  }
+
+  public void logToCSV(){
+    System.out.println("Test write");
+    if (!writeException) {
+      try {
+        double timestamp = Timer.getFPGATimestamp() - m_logStartTime;
+        m_writer.append(csq);
+      } catch (IOException e) {
+        e.printStackTrace();
+        writeException = true;
+      }
+    }
+  }
+  
 }
