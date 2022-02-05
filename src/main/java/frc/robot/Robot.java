@@ -21,6 +21,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -100,7 +101,7 @@ public class Robot extends TimedRobot {
     xbox_oi = new XboxOI();
 
     intakeRoll = new SingleMotorVictorSPX(RobotMap.kIntakeRoll, "Intake Rollers", false);
-    intake = new Piston(RobotMap.kIntakePort1, RobotMap.kIntakePort2);
+    intake = new Piston(PneumaticsModuleType.CTREPCM, RobotMap.kIntakePort1, RobotMap.kIntakePort2);
     hoodReset = new ResetSingleMotorEncoder(Robot.hood);
     leftMaster = new NerdySparkMax(RobotMap.kLeftMasterID, MotorType.kBrushless);
     rightMaster = new NerdySparkMax(RobotMap.kRightMasterID, MotorType.kBrushless);
