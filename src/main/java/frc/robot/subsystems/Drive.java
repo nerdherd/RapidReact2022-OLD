@@ -40,10 +40,10 @@ public class Drive extends ShiftingDrivetrain {
 
 
   // Drive for Thomas
-  private static NerdyFalcon leftMaster = new NerdyFalcon(RobotMap.kLeftMasterID);
-  private static NerdyFalcon rightMaster = new NerdyFalcon(RobotMap.kRightMasterID);
-  private static CANMotorController[] leftSlaves = new CANMotorController[] { new NerdyFalcon(RobotMap.kLeftFollower1ID)};
-  private static CANMotorController[] rightSlaves = new CANMotorController[] { new NerdyFalcon(RobotMap.kRightFollower1ID)};
+  private static NerdySparkMax leftMaster = new NerdySparkMax(RobotMap.kLeftMasterID, MotorType.kBrushless);
+  private static NerdySparkMax rightMaster = new NerdySparkMax(RobotMap.kRightMasterID, MotorType.kBrushless);
+  private static CANMotorController[] leftSlaves = new CANMotorController[] { new NerdySparkMax(RobotMap.kLeftFollower1ID, MotorType.kBrushless)};
+  private static CANMotorController[] rightSlaves = new CANMotorController[] { new NerdySparkMax(RobotMap.kRightFollower1ID, MotorType.kBrushless)};
   private static Piston shifter = new Piston(RobotMap.  kShifterPort1ID, RobotMap.kShifterPort2ID);
 
   // Drive for 2022 Bot

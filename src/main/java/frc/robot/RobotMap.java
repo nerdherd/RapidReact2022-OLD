@@ -8,10 +8,10 @@ package frc.robot;
  * Add your docs here.
  */
 public class RobotMap {
-    public static final int kRightMasterID = 9;
-    public static final int kLeftMasterID = 20;
+    public static final int kRightMasterID = 14;
+    public static final int kLeftMasterID = 0;
 
-    public static final int kLeftFollower1ID = 19;
+    public static final int kLeftFollower1ID = 1;
     public static final int kRightFollower1ID = 15;
   
     public static final int kHoodID = 4;
