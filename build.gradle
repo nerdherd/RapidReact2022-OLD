@@ -2,7 +2,7 @@ import edu.wpi.first.gradlerio.deploy.roborio.RoboRIO
 
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2022.3.1"
+    id "edu.wpi.first.GradleRIO" version "2022.1.1"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -45,7 +45,7 @@ def deployArtifact = deploy.targets.roborio.artifacts.frcJava
 wpi.java.debugJni = false
 
 // Set this to true to enable desktop support.
-def includeDesktopSupport = true
+def includeDesktopSupport = false
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
@@ -68,12 +68,9 @@ dependencies {
     simulationRelease wpi.sim.enableRelease()
 
     testImplementation 'junit:junit:4.12'
-    implementation project(':NerdyLib')
+    implementation project (':NerdyLib')
+    implementation 'com.github.nerdherd:badlog:bb49ca38f2ea0a201327ba36960695590a97b708'
 }
-
-// Simulation configuration (e.g. environment variables).
-wpi.sim.addGui().defaultEnabled = true
-wpi.sim.addDriverstation()
 
 repositories {
     mavenCentral()
@@ -81,6 +78,10 @@ repositories {
         url "https://jitpack.io"
     }
 }
+
+// Simulation configuration (e.g. environment variables).
+wpi.sim.addGui().defaultEnabled = true
+wpi.sim.addDriverstation()
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
 // in order to make them all available at runtime. Also adding the manifest so WPILib
