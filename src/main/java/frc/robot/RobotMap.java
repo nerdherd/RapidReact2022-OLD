@@ -37,8 +37,8 @@ public class RobotMap {
     public static final int kShooterID1 = 21;
     public static final int kShooterID2 = 11;
     
-    public static final int kClimberID1 = 2;
-    public static final int kClimberID2 = 5;
+    public static final int kElevatorID = 2;
+    public static final int kArmID = 5;
 
     public static final int kTimeOfFlightSensorID1 = 0;
     public static final int kTimeOfFlightSensorID2 = 1;
