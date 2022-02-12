@@ -21,14 +21,15 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.constants.DriveConstants;
-// import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.ArmElevator;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Jevois;
@@ -71,8 +72,6 @@ public class Robot extends TimedRobot {
   public static NerdySparkMax rightMaster;
   public static NerdySparkMax leftFollower;
   public static NerdySparkMax rightFollower;
-  public static NerdyFalcon elevator;
-  public static NerdyTalon arm;
 
   public static Arm arm;
 
@@ -86,8 +85,9 @@ public class Robot extends TimedRobot {
   public static Hood hood;
   public static Piston intake;
   public static Shooter shooter;
-  // public static Climber climber;
-
+  public static Arm arm;
+  public static ArmElevator armElev;
+  public static Elevator elevator;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -99,11 +99,14 @@ public class Robot extends TimedRobot {
     hopper = new Hopper();
     hood = new Hood();
     shooter = new Shooter();
-    // climber = new Climber();
+    arm = new Arm();
+    armElev = new ArmElevator();
+    elevator = new Elevator();
     xbox_oi = new XboxOI();
+    
 
     intakeRoll = new SingleMotorVictorSPX(RobotMap.kIntakeRoll, "Intake Rollers", false);
-    intake = new Piston(PneumaticsModuleType.CTREPCM, RobotMap.kIntakePort1, RobotMap.kIntakePort2);
+    intake = new Piston(RobotMap.kIntakePort1, RobotMap.kIntakePort2);
     hoodReset = new ResetSingleMotorEncoder(Robot.hood);
     leftMaster = new NerdySparkMax(RobotMap.kLeftMasterID, MotorType.kBrushless);
     rightMaster = new NerdySparkMax(RobotMap.kRightMasterID, MotorType.kBrushless);
@@ -138,6 +141,9 @@ public class Robot extends TimedRobot {
     indexer.reportToSmartDashboard();
     limelight.reportToSmartDashboard();
     hood.reportToSmartDashboard();
+    arm.reportToSmartDashboard();
+    armElev.reportToSmartDashboard();
+    elevator.reportToSmartDashboard();
     
     CommandScheduler.getInstance().run();
   }
@@ -197,6 +203,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
+    SmartDashboard.putNumber("LMVolt", getLeftMasterVel());
   }
 
   public static void runResetCommand() {
@@ -237,7 +244,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("CAccelX", getCurrentAccelX());
     SmartDashboard.putNumber("CAccelY", getCurrentAccelY());
     SmartDashboard.putNumber("CAccelZ", getCurrentAccelZ ());
-
 
   }
 
