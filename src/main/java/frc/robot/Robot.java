@@ -21,6 +21,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -100,14 +101,14 @@ public class Robot extends TimedRobot {
     xbox_oi = new XboxOI();
 
     intakeRoll = new SingleMotorVictorSPX(RobotMap.kIntakeRoll, "Intake Rollers", false);
-    intake = new Piston(RobotMap.kIntakePort1, RobotMap.kIntakePort2);
+    intake = new Piston(PneumaticsModuleType.CTREPCM, RobotMap.kIntakePort1, RobotMap.kIntakePort2);
     hoodReset = new ResetSingleMotorEncoder(Robot.hood);
     leftMaster = new NerdySparkMax(RobotMap.kLeftMasterID, MotorType.kBrushless);
     rightMaster = new NerdySparkMax(RobotMap.kRightMasterID, MotorType.kBrushless);
     leftFollower = new NerdySparkMax(RobotMap.kLeftFollower1ID, MotorType.kBrushless);
     rightFollower = new NerdySparkMax(RobotMap.kRightFollower1ID, MotorType.kBrushless);
-    elevator = new NerdyFalcon(RobotMap.kClimberID1);
-    arm = new NerdyTalon(RobotMap.kClimberID2);
+    // elevator = new NerdyFalcon(RobotMap.kClimberID1);
+    // arm = new NerdyTalon(RobotMap.kClimberID2);
 
     drive.setDefaultCommand(new TankDrive(Robot.drive, Robot.xbox_oi));
     drive.configKinematics(DriveConstants.kTrackWidth, new Rotation2d(0), new Pose2d(0, 0, new Rotation2d(0)));

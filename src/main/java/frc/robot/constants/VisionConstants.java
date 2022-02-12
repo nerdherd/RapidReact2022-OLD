@@ -31,6 +31,7 @@ public class VisionConstants {
     public final static double kHorizontalFOV_lime = 60.22274663;
     public final static double kVerticalFOV_lime = 55.19214793;
     public final static double kRotP_lime = .004;
+    public final static double kRotF_lime = 0;
 
     // Physical camera constants
     public final static double kCameraHorizontalMountAngle = -25.2; 

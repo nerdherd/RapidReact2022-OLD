@@ -25,4 +25,9 @@ pluginManagement {
         }
     }
 }
+<<<<<<< HEAD
 include 'NerdyLib'
+=======
+
+// include 'NerdyLib'
+>>>>>>> master
