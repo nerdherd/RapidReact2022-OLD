@@ -28,12 +28,12 @@ public class ClimberReady extends SequentialCommandGroup{
     
     public ClimberReady() {
         addCommands(
-            new InstantCommand(() -> Robot.elevator.setHeight(ClimberConstants.kElevatorReadyPosition)), // Assumes arm raises when elevator raises
+            new InstantCommand(() -> Robot.climber.elevator.setHeight(ClimberConstants.kElevatorReadyPosition)), // Assumes arm raises when elevator raises
 
             new ParallelRaceGroup(new InstantCommand(() -> Robot.drive.setPower(ClimberConstants.kApproachSpeed,
                 ClimberConstants.kApproachSpeed)), new ArmDetectCurrent()), // Approach until arm collision
 
-            new InstantCommand(() -> Robot.elevator.setHeight(ClimberConstants.kElevatorLiftPosition)) // Lift robot up
+            new InstantCommand(() -> Robot.climber.elevator.setHeight(ClimberConstants.kElevatorLiftPosition)) // Lift robot up
         );
     }
 

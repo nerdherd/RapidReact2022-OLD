@@ -24,14 +24,14 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class ClimberClimb extends SequentialCommandGroup{
     
-    // Robot.arm.detectCurrent() should have isFinished return true if current goes out of range
+    // Robot.climber.arm.detectCurrent() should have isFinished return true if current goes out of range
 
     public ClimberClimb() {
         addCommands(
-            new InstantCommand(Robot.arm.setAngle(ClimberConstants.kArmRotBack)),
-            new InstantCommand(Robot.armElevator.setHeight(ClimberConstants.kArmTravelUp)),
-            new ParallelRaceGroup(Robot.arm.setAngle(ClimberConstants.kArmRotForwards), new ArmDetectCurrent()),
-            new InstantCommand(Robot.armElevator.setHeight(ClimberConstants.kArmTravelDown))
+            new InstantCommand(Robot.climber.arm.setAngle(ClimberConstants.kArmRotBack)),
+            new InstantCommand(Robot.climber.armElevator.setHeight(ClimberConstants.kArmTravelUp)),
+            new ParallelRaceGroup(Robot.climber.arm.setAngle(ClimberConstants.kArmRotForwards), new ArmDetectCurrent()),
+            new InstantCommand(Robot.climber.armElevator.setHeight(ClimberConstants.kArmTravelDown))
         );
     }
 
