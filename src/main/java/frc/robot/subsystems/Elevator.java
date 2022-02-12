@@ -19,7 +19,7 @@ import frc.robot.constants.ClimberConstants;
  * Add your docs here.
  */
 public class Elevator extends SingleMotorElevator {
-  public static NerdyFalcon mainFalcon = new NerdyFalcon(RobotMap.kClimberID1);
+  public static NerdyFalcon mainFalcon = new NerdyFalcon(RobotMap.kElevatorID);
 
 public Elevator(){
   super(mainFalcon.getID(), "Elevator ", true, false);

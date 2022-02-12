@@ -73,8 +73,6 @@ public class Robot extends TimedRobot {
   public static NerdySparkMax leftFollower;
   public static NerdySparkMax rightFollower;
 
-  public static Arm arm;
-
   public static XboxOI xbox_oi;
   public static Drive drive;
   public static Jevois jevois;
@@ -103,7 +101,6 @@ public class Robot extends TimedRobot {
     armElev = new ArmElevator();
     elevator = new Elevator();
     xbox_oi = new XboxOI();
-    
 
     intakeRoll = new SingleMotorVictorSPX(RobotMap.kIntakeRoll, "Intake Rollers", false);
     intake = new Piston(RobotMap.kIntakePort1, RobotMap.kIntakePort2);
@@ -113,9 +110,6 @@ public class Robot extends TimedRobot {
     leftFollower = new NerdySparkMax(RobotMap.kLeftFollower1ID, MotorType.kBrushless);
     rightFollower = new NerdySparkMax(RobotMap.kRightFollower1ID, MotorType.kBrushless);
     
-    elevator = new NerdyFalcon(RobotMap.kClimberID1);
-    arm = new NerdyTalon(RobotMap.kArmID1);
-
     drive.setDefaultCommand(new TankDrive(Robot.drive, Robot.xbox_oi));
     drive.configKinematics(DriveConstants.kTrackWidth, new Rotation2d(0), new Pose2d(0, 0, new Rotation2d(0)));
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our

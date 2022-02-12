@@ -28,10 +28,10 @@ public class ClimberClimb extends SequentialCommandGroup{
 
     public ClimberClimb() {
         addCommands(
-            new InstantCommand(Robot.arm.setAngle(ClimberConstants.kArmRotBack)),
-            new InstantCommand(Robot.armElevator.setHeight(ClimberConstants.kArmTravelUp)),
-            new ParallelRaceGroup(Robot.arm.setAngle(ClimberConstants.kArmRotForwards), new ArmDetectCurrent()),
-            new InstantCommand(Robot.armElevator.setHeight(ClimberConstants.kArmTravelDown))
+            new InstantCommand(() -> Robot.arm.setAngle(ClimberConstants.kArmRotBack)),
+            new InstantCommand(() -> Robot.armElev.setHeight(ClimberConstants.kArmTravelUp)),
+            new ParallelRaceGroup(new InstantCommand(() -> Robot.arm.setAngle(ClimberConstants.kArmRotForwards)), new ArmDetectCurrent()),
+            new InstantCommand(() -> Robot.armElev.setHeight(ClimberConstants.kArmTravelDown))
         );
     }
 

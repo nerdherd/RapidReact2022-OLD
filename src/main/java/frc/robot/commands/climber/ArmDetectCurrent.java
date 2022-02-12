@@ -28,7 +28,7 @@ public class ArmDetectCurrent extends CommandBase{
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (Robot.arm.getCurrent() > ClimberConstants.kArmDesiredHoldPower + ClimberConstants.kArmHitCurrentChange) {
+        if (Robot.arm.getCurrent() > ClimberConstants.kArmDesiredHoldPow + ClimberConstants.kArmHitCurrentChange) {
             return true;
         } else {
             return false;
