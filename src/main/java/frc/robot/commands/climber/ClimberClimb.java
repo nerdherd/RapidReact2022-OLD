@@ -26,14 +26,12 @@ public class ClimberClimb extends SequentialCommandGroup{
     // Robot.arm.detectCurrent() should have isFinished return true if current goes out of range
 
     public ClimberClimb() {
-        for (int i = 0; i < 3; i++) {
-            addCommands(
-                new InstantCommand(Robot.arm.setAngle(ClimberConstants.kArmRotBack)),
-                new InstantCommand(Robot.armElevator.setHeight(ClimberConstants.kArmTravelUp)),
-                new ParallelRaceGroup(Robot.arm.setAngle(ClimberConstants.kArmRotForwards), Robot.arm.detectCurrent()),
-                new InstantCommand(Robot.armElevator.setHeight(ClimberConstants.kArmTravelDown))
-            );
-        }
+        addCommands(
+            new InstantCommand(Robot.arm.setAngle(ClimberConstants.kArmRotBack)),
+            new InstantCommand(Robot.armElevator.setHeight(ClimberConstants.kArmTravelUp)),
+            new ParallelRaceGroup(Robot.arm.setAngle(ClimberConstants.kArmRotForwards), Robot.arm.detectCurrent()),
+            new InstantCommand(Robot.armElevator.setHeight(ClimberConstants.kArmTravelDown))
+        );
     }
 
 }
