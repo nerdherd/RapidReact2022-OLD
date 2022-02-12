@@ -13,6 +13,7 @@ package frc.robot.commands.climber;
 
 import frc.robot.Robot;
 import frc.robot.constants.ClimberConstants;
+import frc.robot.commands.climber.ArmDetectCurrent;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -30,7 +31,7 @@ public class ClimberReady extends SequentialCommandGroup{
             new InstantCommand(() -> Robot.elevator.setHeight(ClimberConstants.kElevatorReadyPosition)), // Assumes arm raises when elevator raises
 
             new ParallelRaceGroup(new InstantCommand(() -> Robot.drive.setPower(ClimberConstants.kApproachSpeed,
-                ClimberConstants.kApproachSpeed), Robot.arm.detectCurrent())), // Approach until arm collision
+                ClimberConstants.kApproachSpeed)), new ArmDetectCurrent()), // Approach until arm collision
 
             new InstantCommand(() -> Robot.elevator.setHeight(ClimberConstants.kElevatorLiftPosition)) // Lift robot up
         );

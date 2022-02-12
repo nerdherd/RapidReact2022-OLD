@@ -15,7 +15,7 @@ public class ClimberConstants {
     public static final double kElevatorReadyPosition = 0;
     public static final double kElevatorLiftPosition = 0;
     public static final double kApproachSpeed = 0; // Speed drivetrain approaches bar
-    public static final double kMinArmHitCurrent = 0; // Threshold passed when arm collides with an object
+    public static final double kArmHitCurrentChange = 0; // Expected increase in current when arm collides with object
     public static final double kArmRotBack = 0;
     public static final double kArmRotForwards = 0; // Should be slightly more than needed because current detection is also used
     public static final double kArmTravelUp = 0;

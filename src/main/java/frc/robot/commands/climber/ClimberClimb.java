@@ -13,6 +13,7 @@ package frc.robot.commands.climber;
 
 import frc.robot.Robot;
 import frc.robot.constants.ClimberConstants;
+import frc.robot.commands.climber.ArmDetectCurrent;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -29,7 +30,7 @@ public class ClimberClimb extends SequentialCommandGroup{
         addCommands(
             new InstantCommand(Robot.arm.setAngle(ClimberConstants.kArmRotBack)),
             new InstantCommand(Robot.armElevator.setHeight(ClimberConstants.kArmTravelUp)),
-            new ParallelRaceGroup(Robot.arm.setAngle(ClimberConstants.kArmRotForwards), Robot.arm.detectCurrent()),
+            new ParallelRaceGroup(Robot.arm.setAngle(ClimberConstants.kArmRotForwards), new ArmDetectCurrent()),
             new InstantCommand(Robot.armElevator.setHeight(ClimberConstants.kArmTravelDown))
         );
     }
