@@ -5,27 +5,6 @@
 // /* the project.                                                               */
 // /*----------------------------------------------------------------------------*/
 
-<<<<<<< HEAD
-// package frc.robot.commands.climber;
-
-// import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
-// // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// // information, see:
-// // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-// public class ClimberClimb extends SequentialCommandGroup {
-//     /**
-//      * Creates a new ClimberClimb.
-//      */
-//     public ClimberClimb() {
-//         super();
-//         new ClimberReady();
-//         new ClimberLift();
-//         // Add your commands in the super() call, e.g.
-//         // super(new FooCommand(), new BarCommand());
-//     }
-// }
-=======
 /* In order to run this command, position robot so it is relatively close to 
 bottom rung facing the hangar. The robot will drive forward until a curret 
 change in arm is detected. */
@@ -45,16 +24,15 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class ClimberClimb extends SequentialCommandGroup{
     
-    // Robot.climber.arm.detectCurrent() should have isFinished return true if current goes out of range
+    // Robot.arm.detectCurrent() should have isFinished return true if current goes out of range
 
     public ClimberClimb() {
         addCommands(
-            new InstantCommand(Robot.climber.arm.setAngle(ClimberConstants.kArmRotBack)),
-            new InstantCommand(Robot.climber.armElevator.setHeight(ClimberConstants.kArmTravelUp)),
-            new ParallelRaceGroup(Robot.climber.arm.setAngle(ClimberConstants.kArmRotForwards), new ArmDetectCurrent()),
-            new InstantCommand(Robot.climber.armElevator.setHeight(ClimberConstants.kArmTravelDown))
+            new InstantCommand(Robot.arm.setAngle(ClimberConstants.kArmRotBack)),
+            new InstantCommand(Robot.armElevator.setHeight(ClimberConstants.kArmTravelUp)),
+            new ParallelRaceGroup(Robot.arm.setAngle(ClimberConstants.kArmRotForwards), new ArmDetectCurrent()),
+            new InstantCommand(Robot.armElevator.setHeight(ClimberConstants.kArmTravelDown))
         );
     }
 
 }
->>>>>>> master

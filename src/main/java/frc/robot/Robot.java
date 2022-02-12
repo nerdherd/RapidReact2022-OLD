@@ -74,6 +74,8 @@ public class Robot extends TimedRobot {
   public static NerdyFalcon elevator;
   public static NerdyTalon arm;
 
+  public static Arm arm;
+
   public static XboxOI xbox_oi;
   public static Drive drive;
   public static Jevois jevois;
@@ -107,8 +109,9 @@ public class Robot extends TimedRobot {
     rightMaster = new NerdySparkMax(RobotMap.kRightMasterID, MotorType.kBrushless);
     leftFollower = new NerdySparkMax(RobotMap.kLeftFollower1ID, MotorType.kBrushless);
     rightFollower = new NerdySparkMax(RobotMap.kRightFollower1ID, MotorType.kBrushless);
-    // elevator = new NerdyFalcon(RobotMap.kClimberID1);
-    // arm = new NerdyTalon(RobotMap.kClimberID2);
+    
+    elevator = new NerdyFalcon(RobotMap.kClimberID1);
+    arm = new NerdyTalon(RobotMap.kArmID1);
 
     drive.setDefaultCommand(new TankDrive(Robot.drive, Robot.xbox_oi));
     drive.configKinematics(DriveConstants.kTrackWidth, new Rotation2d(0), new Pose2d(0, 0, new Rotation2d(0)));

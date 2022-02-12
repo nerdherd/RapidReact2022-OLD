@@ -68,13 +68,8 @@ dependencies {
     simulationRelease wpi.sim.enableRelease()
 
     testImplementation 'junit:junit:4.12'
-<<<<<<< HEAD
-    implementation project (':NerdyLib')
-    implementation 'com.github.nerdherd:badlog:bb49ca38f2ea0a201327ba36960695590a97b708'
-=======
     implementation 'com.github.nerdherd:badlog:bb49ca38f2ea0a201327ba36960695590a97b708'
     // implementation project(':NerdyLib')
->>>>>>> master
 }
 
 repositories {

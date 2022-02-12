@@ -35,6 +35,10 @@ public class Arm extends SingleMotorArm {
     SmartDashboard.putNumber("ArmAngle", this.getAngle());
   }
  
+  public void setAngle(double angle) {
+    this.setAngleMotionMagic(angle);
+  }
+
   public void storeAngle(double angle){
     storedAngle = angle;
   }
