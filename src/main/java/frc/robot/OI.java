@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.auto.BasicAuto;
 import frc.robot.commands.auto.TarmacToTerminalThree;
+import frc.robot.commands.climber.ClimberClimb;
+import frc.robot.commands.climber.ClimberReady;
 import frc.robot.commands.hood.SetAngle;
 import frc.robot.commands.intake.IntakeBalls;
 import frc.robot.commands.intake.Stow;
@@ -38,6 +40,11 @@ public class OI extends DefaultOI {
         hoodAngle_5.whenPressed(new SetAngle());
         stow_10.whenPressed(new Stow());
 
+        // CLIMBER
+        SmartDashboard.putData("Climber Ready", new ClimberReady());
+        SmartDashboard.putData("Climber Climb", new ClimberClimb());
+
+        // AUTOS
         SmartDashboard.putData("MoveToAngle", new MoveToAngleLime(VisionConstants.kRotP_lime, VisionConstants.kVecP_lime));
         SmartDashboard.putData("Basic Auto", new BasicAuto());
         SmartDashboard.putData("Tarmac to Terminal Five", new TarmacToTerminalThree(Robot.drive));
