@@ -29,15 +29,15 @@ import com.nerdherd.lib.misc.NerdyMath;
 public class PS4OI extends AbstractOI {
 
     public PS4Controller driverController;
-    public Joystick operatorJoy;
+    public PS4Controller operatorController;
     private double m_joystickDeadband;
 
     public JoystickButton intakeStow, aimIndex, climbReady, lowGear, highGear, resetEncoder;
     public Button outtakeShift;
     public Button flywheel_RT;
 
-    public final int BUTTON_A = 1, BUTTON_B = 2, BUTTON_X = 3, BUTTON_Y = 4, BUTTON_LB = 5, BUTTON_RB = 6,
-            BUTTON_BACK = 7, BUTTON_START = 8, BUTTON_LEFT_STICK = 9, BUTTON_RIGHT_STICK = 10;
+    public final int CROSS = 1, CIRCLE = 2, SQUARE = 0, TRIANGLE = 3, BUTTON_LB = 4, BUTTON_RB = 5,
+            SHARE = 8, OPTION = 9, BUTTON_LEFT_STICK = 10, BUTTON_RIGHT_STICK = 11;
 
     public PS4OI() {
         this(0);
@@ -47,16 +47,16 @@ public class PS4OI extends AbstractOI {
         configJoystickDeadband(deadband);
 
         driverController = new PS4Controller(0);
-        operatorJoy = new Joystick(1);
+        operatorController = new PS4Controller(1);
 
-        intakeStow = new JoystickButton(driverController, BUTTON_LB);
-        aimIndex = new JoystickButton(driverController, BUTTON_RB);
-        climbReady = new JoystickButton(driverController, BUTTON_X);
-        lowGear = new JoystickButton(driverController, BUTTON_A);
-        highGear = new JoystickButton(driverController, BUTTON_B);
-        resetEncoder = new JoystickButton(driverController, BUTTON_BACK);
+        intakeStow = new JoystickButton(operatorController, BUTTON_LB);
+        aimIndex = new JoystickButton(operatorController, BUTTON_RB);
+        climbReady = new JoystickButton(operatorController, SQUARE);
+        lowGear = new JoystickButton(operatorController, CROSS);
+        highGear = new JoystickButton(operatorController, CIRCLE);
+        resetEncoder = new JoystickButton(operatorController, SHARE);
 
-        outtakeShift = new DPadButton(driverController, Direction.UP);
+        outtakeShift = new DPadButton(operatorController, Direction.UP);
         
         intakeStow.whenPressed(new ToggleStow());
     }
@@ -96,14 +96,16 @@ public class PS4OI extends AbstractOI {
         return NerdyMath.handleDeadband(-driverController.getRightY(), m_joystickDeadband);
     }
 
+    // use left operator joystick
+
     @Override
     public double getOperatorJoyX() {
-        return operatorJoy.getX();
+        return operatorController.getLeftX();
     }
 
     @Override
     public double getOperatorJoyY() {
-        return -operatorJoy.getY();
+        return -operatorController.getLeftY();
     } 
 
     public void configJoystickDeadband(double deadband) {
