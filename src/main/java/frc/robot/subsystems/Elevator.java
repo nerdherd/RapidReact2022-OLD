@@ -18,10 +18,10 @@ import frc.robot.constants.ClimberConstants;
 /**
  * Add your docs here.
  */
-public class Elevator extends SingleMotorElevator {
-  public static NerdyFalcon mainFalcon = new NerdyFalcon(RobotMap.kElevatorID);
+public class ArmElevator extends SingleMotorElevator {
+  public static NerdyFalcon mainFalcon = new NerdyFalcon(RobotMap.kArmID2);
 
-public Elevator(){
+public ArmElevator(){
   super(mainFalcon.getID(), "Elevator ", true, false);
   // mainFalcon.setBrakeMode();
   // followerFalcon.setBrakeMode();
@@ -31,20 +31,31 @@ public Elevator(){
   super.configCurrentLimit(60, 60);
 }
 
-public void setHeight(double pos){
-  mainFalcon.setPower(ClimberConstants.kClimberDesiredLiftPow);
+
+public void setHeight(String action, double pos){
+  if (action.equals("lift")){
+  mainFalcon.setPower(ClimberConstants.kArmDesiredLiftPow);
         if(mainFalcon.getPosition() > pos){
-            mainFalcon.setPower(ClimberConstants.kClimberDesiredHoldPow);
+            mainFalcon.setPower(ClimberConstants.kArmDesiredHoldPow);
         }else{
-            mainFalcon.setPower(ClimberConstants.kClimberDesiredLiftPow);
+            mainFalcon.setPower(ClimberConstants.kArmDesiredLiftPow);
         }
       }
+  else{
+    mainFalcon.setPower(ClimberConstants.kArmDesiredLowPow);
+    if(mainFalcon.getPosition() < pos){
+      mainFalcon.setPower(ClimberConstants.kArmDesiredHoldPow);
+    }else{
+      mainFalcon.setPower(ClimberConstants.kArmDesiredLowPow);
+    }
+  }
+}
 
   @Override
   public void reportToSmartDashboard(){
     super.reportToSmartDashboard();
-    SmartDashboard.putNumber("ElevCur", mainFalcon.getCurrent());
-    SmartDashboard.putNumber("ElevPos", mainFalcon.getPosition());
+    SmartDashboard.putNumber("ArmElevCur", mainFalcon.getCurrent());
+    SmartDashboard.putNumber("ArmElevPos", mainFalcon.getPosition());
   }
 
 
