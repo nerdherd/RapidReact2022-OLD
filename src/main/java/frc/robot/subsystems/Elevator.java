@@ -18,10 +18,10 @@ import frc.robot.constants.ClimberConstants;
 /**
  * Add your docs here.
  */
-public class ArmElevator extends SingleMotorElevator {
+public class Elevator extends SingleMotorElevator {
   public static NerdyFalcon mainFalcon = new NerdyFalcon(RobotMap.kArmID2);
 
-public ArmElevator(){
+public Elevator(){
   super(mainFalcon.getID(), "Elevator ", true, false);
   // mainFalcon.setBrakeMode();
   // followerFalcon.setBrakeMode();

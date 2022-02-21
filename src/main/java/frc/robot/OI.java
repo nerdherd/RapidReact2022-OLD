@@ -9,11 +9,15 @@ import frc.robot.commands.auto.BasicAuto;
 import frc.robot.commands.auto.TarmacToTerminalThree;
 import frc.robot.commands.climber.ClimberClimb;
 import frc.robot.commands.climber.ClimberReady;
+import frc.robot.commands.climber.ExtendElevator;
+import frc.robot.commands.climber.RotateArmFor;
+import frc.robot.commands.climber.RotateArmBack;
 import frc.robot.commands.hood.SetAngle;
 import frc.robot.commands.intake.IntakeBalls;
 import frc.robot.commands.intake.Stow;
 import frc.robot.commands.shooting.ShootBall;
 import frc.robot.commands.vision.MoveToAngleLime;
+import frc.robot.constants.ClimberConstants;
 import frc.robot.constants.VisionConstants;
 
 public class OI extends DefaultOI {
@@ -48,5 +52,9 @@ public class OI extends DefaultOI {
         SmartDashboard.putData("MoveToAngle", new MoveToAngleLime(VisionConstants.kRotP_lime, VisionConstants.kVecP_lime));
         SmartDashboard.putData("Basic Auto", new BasicAuto());
         SmartDashboard.putData("Tarmac to Terminal Five", new TarmacToTerminalThree(Robot.drive));
+
+        SmartDashboard.putData("Extend Elevator", new ExtendElevator());
+        SmartDashboard.putData("Rotate Arm Forwards", new RotateArmFor());
+        SmartDashboard.putData("Rotate Arm Backwards", new RotateArmBack());
     }
 }

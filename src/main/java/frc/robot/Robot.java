@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.constants.DriveConstants;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.ArmElevator;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Jevois;
@@ -84,7 +84,7 @@ public class Robot extends TimedRobot {
   public static Piston intake;
   public static Shooter shooter;
   public static Arm arm;
-  public static ArmElevator armElev;
+  public static Elevator armElev;
   public static Elevator elevator;
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -98,7 +98,7 @@ public class Robot extends TimedRobot {
     hood = new Hood();
     shooter = new Shooter();
     arm = new Arm();
-    armElev = new ArmElevator();
+    armElev = new Elevator();
     elevator = new Elevator();
     xbox_oi = new XboxOI();
 
